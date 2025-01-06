@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CORS Checker by Professor the Hunter - Test and exploit CORS configurations with ease.">
+    <meta name="keywords" content="CORS Checker, CORS exploit, CORS configuration, security testing, web security">
+    <meta name="author" content="Professor the Hunter">
+    <title>CORS Checker | CORS Exploit Online</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <script type="text/javascript">
+        function sendRequest(method) {
+            var corsUrl = document.getElementById('corsUrl').value;
+            if (!corsUrl) {
+                alert("Please enter a URL.");
+                return;
+            }
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4) {
+                    var log = document.getElementById('consoleLog');
+                    if (this.status >= 200 && this.status < 300) {
+                        log.innerHTML += "<p><strong>" + method + ":</strong> " + this.responseText + "</p>";
+                    } else if (this.status >= 400 && this.status < 500) {
+                        log.innerHTML += "<p><strong>" + method + ":</strong> Client error. Status: " + this.status + "</p>";
+                    } else if (this.status >= 500) {
+                        log.innerHTML += "<p><strong>" + method + ":</strong> Server error. Status: " + this.status + "</p>";
+                    } else {
+                        log.innerHTML += "<p><strong>" + method + ":</strong> Request failed with status: " + this.status + "</p>";
+                    }
+                }
+            };
+            xhttp.open(method, corsUrl, true);
+            xhttp.withCredentials = true;
+            xhttp.send();
+        }
+
+        function cors1() { sendRequest("GET"); }
+        function cors2() { sendRequest("POST"); }
+        function cors3() { sendRequest("OPTIONS"); }
+        function cors4() { sendRequest("DELETE"); }
+        function cors5() { sendRequest("PUT"); }
+
+        function clearConsole() {
+            document.getElementById('consoleLog').innerHTML = "";
+        }
+    </script>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            background-color: black;
+            color: white;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            text-align: center;
+            padding: 20px;
+            flex: 1;
+        }
+        .button {
+            background-color: #333;
+            border: 3px solid seagreen;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            transition-duration: 0.4s;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 20px;
+            border-radius: 12px;
+            margin: 10px;
+        }
+        .button:hover {
+            background-color: #74f22c;
+            color: red;
+        }
+        input[type=text] {
+            width: 80%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 2px solid seagreen;
+            border-radius: 12px;
+            font-size: 18px;
+            background-color: #333;
+            color: white;
+        }
+        #consoleLog {
+            background-color: #333;
+            color: #00FF00;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 12px;
+            height: 200px;
+            overflow-y: auto;
+            text-align: left;
+            white-space: pre-wrap;
+        }
+        a {
+            color: white;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .footer {
+            background-color: #222;
+            color: #999;
+            padding: 10px;
+            text-align: center;
+            border-top: 1px solid #444;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="color:white;">CORS Checker by Professor the Hunter</h1>
+        <p>Welcome to the CORS Checker tool, designed to help you test and exploit Cross-Origin Resource Sharing (CORS) configurations. Enter a URL below and use the buttons to send different types of HTTP requests.</p>
+        <input type="text" id="corsUrl" placeholder="Enter the URL here" />
+        <br>
+        <button class="button" type="button" onclick="cors1()">GET</button>
+        <button class="button" type="button" onclick="cors2()">POST</button>
+        <button class="button" type="button" onclick="cors3()">OPTIONS</button>
+        <button class="button" type="button" onclick="cors4()">DELETE</button>
+        <button class="button" type="button" onclick="cors5()">PUT</button>
+        <br>
+        <button class="button" type="button" onclick="clearConsole()">Clear Console</button>
+        <div id="consoleLog"></div>
+        <br><br>
+        <a href="https://hackerone.com/bughuntar" target="_blank" rel="noopener">
+            <img decoding="async" src="https://raw.githubusercontent.com/tooln/photos/main/logo.png" height="300px" width="300px" alt="HackerOne Profile">
+        </a>
+    </div>
+    <div class="footer"><footer style="margin-top: 20px; font-size: 14px; color: #666;">&copy; 2024 
+        Powered by <a href="https://bughuntar.com" target="_blank" style="color: #007bff; text-decoration: none;">Professor Software Solutions</a>
+    </footer>
+    </div>
+</body>
+</html>
