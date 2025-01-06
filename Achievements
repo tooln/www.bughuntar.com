@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore MD Sagor Hossain's achievements in cybersecurity and software development. View his top rankings in HackerOne and recent CVE assignment.">
+    <meta name="keywords" content="cybersecurity achievements, MD Sagor Hossain, HackerOne leaderboard, CVE-2024-37402, software development, top hacker rankings">
+    <meta name="author" content="MD Sagor Hossain">
+    <title>Achievements - MD Sagor Hossain</title>
+    <style>
+        body {
+            background: #f5f5f5;
+            color: #333;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            padding: 30px;
+            width: 100%;
+            text-align: center;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 40px;
+        }
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        header h2 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #e0f7fa;
+        }
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 40px 20px;
+            flex: 1;
+        }
+        .achievement-card {
+            margin: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .achievement-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        .achievement-card img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+        }
+        .button {
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+            margin-top: 10px;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+        }
+        .button:hover {
+            background: linear-gradient(135deg, #feb47b, #ff7e5f);
+            transform: translateY(-2px);
+        }
+        @media (max-width: 768px) {
+            .achievement-card {
+                width: 200px;
+            }
+            header h1 {
+                font-size: 2em;
+            }
+            header h2 {
+                font-size: 1.2em;
+            }
+        }
+        .highlight {
+            background: #ffeb3b;
+            color: #333;
+            border: 2px solid #fbc02d;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 1.2em;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .highlight h3 {
+            margin-top: 0;
+        }
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .popup-content {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+        }
+        .popup-content h2 {
+            margin-top: 0;
+            font-size: 1.8em;
+            color: #00796b;
+        }
+        .popup-content p {
+            font-size: 1.2em;
+            margin: 10px 0;
+            color: #333;
+        }
+        .popup-content .button {
+            margin-top: 20px;
+            background: #00796b;
+            color: #fff;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            display: inline-block;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .popup-content .button:hover {
+            background: #004d40;
+            transform: scale(1.05);
+        }
+        .popup-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #333;
+        }
+        .profile-section {
+            background: #e0f2f1;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            text-align: center;
+        }
+        .profile-section h2 {
+            color: #00796b;
+        }
+        .profile-section a {
+            text-decoration: none;
+            color: #00796b;
+            font-weight: bold;
+            border-bottom: 2px solid #00796b;
+            transition: color 0.3s ease, border-bottom 0.3s ease;
+        }
+        .profile-section a:hover {
+            color: #004d40;
+            border-bottom: 2px solid #004d40;
+        }
+        .profile-section img {
+            width: 150px;
+            height: auto;
+            margin: 10px 0;
+        }
+        footer {
+            background: #00796b;
+            color: white;
+            text-align: center;
+            padding: 10px 20px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            border-top: 1px solid #004d40;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Achievements</h1>
+        <h2>MD Sagor Hossain - Cyber Security Researcher & Software Developer</h2>
+    </header>
+    <main class="content">
+        <section>
+            <p style="font-size: 1.2em; max-width: 800px; margin: 0 auto 20px auto;color:white;">
+                I am excited to share that I secured the 1st position on the HackerOne leaderboard in Bangladesh for Q2 2024 and ranked 26th globally!
+            </p>
+            <!-- New Highlight Section -->
+            <div class="highlight">
+                <h3>Announcing CVE-2024-37402!</h3>
+                <p>I've been officially assigned CVE-2024-37402 for discovering an IDOR vulnerability. This is a major milestone in my cybersecurity career and I am thrilled to share this achievement!</p>
+            </div>
+            <div style="display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+                <article class="achievement-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Top achievement in Bangladesh for 2024">
+                    <p>2024: Ranked 1st in Bangladesh</p>
+                </article>
+                <article class="achievement-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Global ranking for 2024">
+                    <p>2024: Ranked 26th Globally</p>
+                </article>
+                <article class="achievement-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Top achievement in Bangladesh for 2023">
+                    <p>2023: Ranked 2nd in Bangladesh</p>
+                </article>
+                <article class="achievement-card">
+                    <img src="https://cdn-icons-png.flaticon.com/512/190/190411.png" alt="Global ranking for 2023">
+                    <p>2023: Ranked 51st Globally</p>
+                </article>
+            </div>
+        </section>
+        <section>
+            <p style="font-size: 1.2em; max-width: 800px; margin: 0 auto 20px auto;color:white;">
+                These accomplishments highlight my dedication to uncovering vulnerabilities and advancing cybersecurity.
+            </p>
+            <p style="font-size: 1.2em; max-width: 800px; margin: 0 auto 20px auto;color:white;">
+                A huge thanks to the amazing community and my team at Professor Software Solutions for their unwavering support!
+            </p>
+            <a href="https://hackerone.com/leaderboard/country?year=2024&quarter=2&country=BD" target="_blank" class="button" style="color: white;">2024 Leaderboard</a>
+            <a href="https://hackerone.com/leaderboard/reputation?year=2023" target="_blank" class="button" style="color: white;">2023 Global Leaderboard</a>
+            <a href="https://hackerone.com/leaderboard/country?year=2023&country=BD" target="_blank" class="button" style="color: white;">2023 Bangladesh Leaderboard</a>
+        </section>
+        <!-- HackerOne Profile Section -->
+        <section class="profile-section">
+            <h2>Visit My HackerOne Profile</h2>
+            <img src="https://res.cloudinary.com/startup-grind/image/upload/c_fill,dpr_2.0,f_auto,g_center,h_1200,q_100,w_1200/v1/gcs/platform-data-hackerone/contentbuilder/social_image.png" alt="HackerOne Logo">
+            <p>Explore my work and contributions in the cybersecurity community on HackerOne.</p>
+            <a href="https://hackerone.com" target="_blank">View My HackerOne Profile</a>
+        </section>
+    </main>
+    <!-- Popup Modal -->
+    <div id="cve-popup" class="popup-overlay">
+        <div class="popup-content">
+            <span class="popup-close">&times;</span>
+            <h2>Exciting News!</h2>
+            <p>I have been officially assigned CVE-2024-37402 for discovering an IDOR vulnerability. This is a significant milestone in my cybersecurity career!</p>
+            <p>Thank you for your continued support and encouragement!</p>
+            <a href="https://x.com/bughuntar" target="_blank" class="button">View My Twitter Profile</a>
+        </div>
+    </div>
+    <script>
+        // Show the popup when the page loads
+        window.onload = function() {
+            var popup = document.getElementById('cve-popup');
+            popup.style.display = 'flex';
+            
+            // Close popup when clicking the close button
+            document.querySelector('.popup-close').onclick = function() {
+                popup.style.display = 'none';
+            }
+            
+            // Close popup when clicking outside of the popup content
+            window.onclick = function(event) {
+                if (event.target == popup) {
+                    popup.style.display = 'none';
+                }
+            }
+        }
+    </script>
+    <footer>
+        <p>© 2024 Professor Software Solutions. All rights reserved.</p>
+    </footer>
+</body>
+</html>
