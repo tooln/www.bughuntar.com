@@ -1,0 +1,100 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CVSS Bounty Calculator helps you calculate the bounty amount based on CVSS severity. Efficiently estimate rewards for vulnerabilities using our easy-to-use tool.">
+    <meta name="keywords" content="CVSS Bounty Calculator, CVSS, Bounty Calculation, Vulnerability Assessment, Security Tool, CVSS Severity Calculator">
+    <meta name="author" content="Professor Software Solutions">
+    <title>CVSS Bounty Calculator</title>
+    <link rel="icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/commons/3/34/Icon_hacker.png">
+</head>
+<center><div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f0f0; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+    <div class="calculator" style="background-color: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); text-align: center; width: 550px; max-width: 100%;">
+        <h2 style="font-size: 24px; margin-bottom: 20px; color: #333;">CVSS Bounty Calculator</h2>
+        <p style="font-size: 16px; color: #666; margin-bottom: 20px;">Welcome to the CVSS Bounty Calculator, your go-to tool for calculating the appropriate bounty based on the Common Vulnerability Scoring System (CVSS) severity score. Our calculator provides a straightforward method to estimate the potential reward for identifying vulnerabilities in software systems.</p>
+        <p style="font-size: 16px; color: #666; margin-bottom: 20px;">To use this tool, simply enter the highest and lowest amounts of the bounty range, along with the severity score of the vulnerability. The calculator will then determine the bounty amount based on the severity level you choose.</p>
+        <form id="calculatorForm" style="display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; text-align: left;">
+            <label for="highAmount" style="font-size: 14px; color: #666;">Highest Amount:</label>
+            <input type="number" id="highAmount" name="highAmount" required style="width: calc(100% - 20px); padding: 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 5px; transition: border-color 0.3s ease;" placeholder="Enter the highest bounty amount">
+            
+            <label for="lowAmount" style="font-size: 14px; color: #666;">Lowest Amount:</label>
+            <input type="number" id="lowAmount" name="lowAmount" required style="width: calc(100% - 20px); padding: 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 5px; transition: border-color 0.3s ease;" placeholder="Enter the lowest bounty amount">
+            
+            <label for="actualSeverity" style="font-size: 14px; color: #666;">Severity:</label>
+            <input type="number" id="actualSeverity" name="actualSeverity" onchange="autoSelectSeverity()" required style="width: calc(100% - 20px); padding: 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 5px; transition: border-color 0.3s ease;" placeholder="Enter the CVSS severity score">
+        </form>
+        
+        <!-- Hidden options section -->
+        <div class="options" id="severityOptions" style="display: none; margin-bottom: 20px;">
+            <button type="button" class="option low" onclick="selectOption('low')" style="display: none; padding: 15px; font-size: 16px; border: none; cursor: pointer; border-radius: 5px; background-color: #4CAF50; color: #fff; transition: background-color 0.3s ease, transform 0.2s ease;">Low</button>
+            <button type="button" class="option medium" onclick="selectOption('medium')" style="display: none; padding: 15px; font-size: 16px; border: none; cursor: pointer; border-radius: 5px; background-color: #4CAF50; color: #fff; transition: background-color 0.3s ease, transform 0.2s ease;">Medium</button>
+            <button type="button" class="option high" onclick="selectOption('high')" style="display: none; padding: 15px; font-size: 16px; border: none; cursor: pointer; border-radius: 5px; background-color: #4CAF50; color: #fff; transition: background-color 0.3s ease, transform 0.2s ease;">High</button>
+            <button type="button" class="option critical" onclick="selectOption('critical')" style="display: none; padding: 15px; font-size: 16px; border: none; cursor: pointer; border-radius: 5px; background-color: #4CAF50; color: #fff; transition: background-color 0.3s ease, transform 0.2s ease;">Critical</button>
+        </div>
+
+        <button type="button" onclick="calculate()" style="padding: 15px 30px; font-size: 18px; border: none; cursor: pointer; border-radius: 5px; background-color: #007bff; color: #fff; transition: background-color 0.3s ease, transform 0.2s ease;">Calculate</button>
+        
+        <div id="resultDisplay" style="margin-top: 20px; text-align: center;">
+            Bounty: <span id="result" style="font-size: 28px; font-weight: bold; color: #4CAF50;">$0.00</span>
+        </div>
+    </div>
+    <script>
+        let selectedOption = 'low'; // Default selected option
+
+        function selectOption(option) {
+            // Update selected option and style
+            selectedOption = option;
+            document.querySelectorAll('.option').forEach(btn => btn.classList.remove('selected'));
+            document.querySelector(`.option.${option}`).classList.add('selected');
+        }
+
+        function calculate() {
+            // Get input values
+            let highAmount = parseFloat(document.getElementById('highAmount').value);
+            let lowAmount = parseFloat(document.getElementById('lowAmount').value);
+            let actualSeverity = parseFloat(document.getElementById('actualSeverity').value);
+
+            // Determine calculation based on selected option
+            let result;
+            switch (selectedOption) {
+                case 'medium':
+                    result = ((highAmount - lowAmount) / 2.9) * (actualSeverity - 4.0) + lowAmount;
+                    break;
+                case 'high':
+                    result = ((highAmount - lowAmount) / 1.9) * (actualSeverity - 7.0) + lowAmount;
+                    break;
+                case 'critical':
+                    result = ((highAmount - lowAmount) / 1.0) * (actualSeverity - 9.0) + lowAmount;
+                    break;
+                case 'low':
+                default:
+                    result = ((highAmount - lowAmount) / 3.9) * (actualSeverity - 0) + lowAmount;
+                    break;
+            }
+
+            // Display result with two decimal places
+            document.getElementById('result').textContent = result.toFixed(2);
+        }
+
+        function autoSelectSeverity() {
+            let actualSeverity = parseFloat(document.getElementById('actualSeverity').value);
+
+            // Automatically select severity based on actual severity input
+            if (actualSeverity >= 0 && actualSeverity <= 3.9) {
+                selectOption('low');
+            } else if (actualSeverity >= 4.0 && actualSeverity <= 6.9) {
+                selectOption('medium');
+            } else if (actualSeverity >= 7.0 && actualSeverity <= 8.9) {
+                selectOption('high');
+            } else if (actualSeverity >= 9.0 && actualSeverity <= 10.0) {
+                selectOption('critical');
+            }
+
+            // Show the severity options section
+            document.getElementById('severityOptions').style.display = 'flex';
+        }
+    </script>
+
+</div>
+<footer style="margin-top: 20px; font-size: 14px; color: #666;">&copy; 2024 
+        Powered by <a href="https://bughuntar.com" target="_blank" style="color: #007bff; text-decoration: none;">Professor Software Solutions</a>
+    </footer></center>
