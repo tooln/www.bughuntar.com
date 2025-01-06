@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="HTML, CSS, and JavaScript Compiler with live preview and control buttons">
+    <title>HTML Compiler</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 100%;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        .pane {
+            width: 50%;
+            padding: 10px;
+            box-sizing: border-box;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .code {
+            background-color: #282c34;
+            color: #abb2bf;
+        }
+        .output {
+            background-color: #f9f9f9;
+            flex-grow: 1;
+        }
+        textarea {
+            width: 100%;
+            height: calc(100% - 40px); /* Adjust for button height */
+            border: none;
+            background: transparent;
+            color: inherit;
+            font-family: inherit;
+            font-size: inherit;
+            resize: none;
+        }
+        iframe {
+            width: 100%;
+            height: calc(100% - 40px); /* Adjust for button height */
+            border: none;
+        }
+        .footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px;
+            background-color: #ddd;
+            border-top: 1px solid #ccc;
+        }
+        .code-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        .output-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: flex-end;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .resize-handle {
+            width: 10px;
+            cursor: ew-resize;
+            background: #ccc;
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            z-index: 1;
+        }
+        @media (max-width: 600px) {
+            .container {
+                flex-direction: column;
+            }
+            .pane {
+                width: 100%;
+                border-right: none;
+                border-bottom: 2px solid #ccc;
+            }
+            .resize-handle {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="pane code">
+            <textarea id="codeEditor" placeholder="Write your HTML, CSS, and JS here..."></textarea>
+            <div class="footer code-footer">
+                <button id="compileBtn">Compile</button>
+            </div>
+        </div>
+        <div class="resize-handle"></div>
+        <div class="pane output">
+            <iframe id="outputFrame"></iframe>
+            <div class="footer output-footer">
+                <button id="fullViewBtn">Full View</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const codeEditor = document.getElementById('codeEditor');
+        const outputFrame = document.getElementById('outputFrame');
+        const compileBtn = document.getElementById('compileBtn');
+        const fullViewBtn = document.getElementById('fullViewBtn');
+        const pane1 = document.querySelector('.pane.code');
+        const pane2 = document.querySelector('.pane.output');
+
+        function updateOutput() {
+            const code = codeEditor.value;
+            outputFrame.contentDocument.open();
+            outputFrame.contentDocument.write(code);
+            outputFrame.contentDocument.close();
+        }
+
+        compileBtn.addEventListener('click', updateOutput);
+
+        fullViewBtn.addEventListener('click', () => {
+            if (pane2.style.width === '100%') {
+                pane2.style.width = '50%';
+                pane1.style.width = '50%';
+                fullViewBtn.textContent = 'Full View';
+            } else {
+                pane2.style.width = '100%';
+                pane1.style.width = '0%';
+                fullViewBtn.textContent = 'Restore View';
+            }
+        });
+
+        const resizeHandle = document.querySelector('.resize-handle');
+
+        let isResizing = false;
+
+        resizeHandle.addEventListener('mousedown', () => {
+            isResizing = true;
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', () => {
+                isResizing = false;
+                document.removeEventListener('mousemove', handleMouseMove);
+            });
+        });
+
+        function handleMouseMove(event) {
+            if (isResizing) {
+                const containerWidth = document.querySelector('.container').offsetWidth;
+                const newWidth = event.clientX / containerWidth * 100;
+                pane1.style.width = `${newWidth}%`;
+                pane2.style.width = `${100 - newWidth}%`;
+            }
+        }
+    </script>
+</body>
+</html>
